@@ -40,7 +40,9 @@ for file in $(find . -type f | grep -v seduce_doc | sed 's/^.//' | sort); do
 		fi
 		echo  "+ $name"
 		relative_path=$(echo $file | sed 's/^.//')
-		echo "              <a href='$relative_path'>$name</a><br/><br/>" >> $INDEX
+        last_modified=$(stat -c'%y' $relative_path | cut -c 1-16)
+        echo "              <a href='$relative_path'>$name</a><br/>" >> $INDEX
+        echo "              <span>-- last modified at $last_modified --</span><br/><br/>" >> $INDEX
 	fi
 done
 echo "          </div><!-- sub-title -->" >> $INDEX
